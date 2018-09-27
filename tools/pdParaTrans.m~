@@ -1,0 +1,21 @@
+function y = pdParaTrans(x,p,q)
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%
+% implementation of parallel transport on the SPD space based on the
+% following
+%  
+% HJ Kim, et al. Canonical correlation analysis on riemannian manifolds and
+% its applications, ECCV 2014
+%  Ferreira, R., Xavier, J., Costeira, J.P., Barroso, V.: Newton method for  riemannian centroid  computation  in  naturally  reductive  homogeneous  spaces.   In:  ICASSP. (2006)
+
+
+v = logMap(p,q);
+ph = p^0.5;
+phi = p^-0.5;
+
+tmp = (phi * v * phi) / 2;
+tmp = (tmp + tmp') / 2;
+r = expMap(eye(length(v)),tmp);
+
+y = ph * (r * (phi * x * phi) * r) * ph;
+y = (y + y') / 2;
+end
